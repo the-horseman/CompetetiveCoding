@@ -6,10 +6,11 @@ using namespace std;
 
 int main()
 {
-    vector<int> arr = {1, 3, 2, 4};
+    vector<int> arr = {4, 2, 3, 1};
     stack<int> s;
     vector<int> ans;
-    for (int i = arr.size() - 1; i >= 0; i--)
+    int n = arr.size();
+    for (int i = 0; i < n; ++i)
     {
         if (s.size() == 0)
         {
@@ -34,7 +35,6 @@ int main()
             s.push(arr[i]);
         }
     }
-    reverse(ans.begin(), ans.end());
     for (int i = 0; i < ans.size(); ++i)
         cout << ans[i] << " ";
     return 0;
