@@ -1,45 +1,32 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 
 #define ll long long
-#define vi vector <int>
+#define vi vector<int>
+#define vvi vector<vi>
 using namespace std;
 
+int dp[15][10005];
+int submain(vector<int> &arr, int amt, int ind)
+{
+    if (amt == 0)
+        return 0;
+    if (dp[ind][amt] != -1)
+        return dp[ind][amt];
+    int ans = 99999;
+    for (int i = ind; i < arr.size(); ++i)
+    {
+        if (amt - arr[i] >= 0)
+            ans = min(ans, 1 + submain(arr, amt - arr[i], i));
+    }
+    return dp[ind][amt] = ans;
+}
 
 int main()
 {
-    int n=3, w=4;
-    // cin>>n>>w;
-    int arr[n] = {3,5,2};
-    // for(int i=0 ; i<n ; ++i)
-    //     cin>>arr[i];
-    int dp[n+1][w+1];
-    for(int i=0 ; i<=n ; ++i)
-    {
-        for(int j=0 ; j<=w ; ++j)
-        {
-            if (i==0)
-                dp[i][j] = INT_MAX-1;
-            else
-                dp[i][j] = 0;
-        }
-    }
-    for(int i=1 ; i<=w ; ++i)
-    {
-        if (i%arr[0] == 0)
-            dp[1][i] = i/arr[0];
-        else
-            dp[1][i]=INT_MAX-1;
-    }
-    for(int i=2 ; i<=n ; ++i)
-    {
-        for(int j=1 ; j<=w ; ++j)
-        {
-            if (j-arr[i-1] >=0)
-                dp[i][j] = min(1+dp[i][j-arr[i-1]], dp[i-1][j]);
-            else
-                dp[i][j] = dp[i-1][j];
-        }
-    }
-    cout<<dp[n][w]<<endl;
+    vi arr = {1, 2, 5};
+    int amt = 11;
+    memset(dp, -1, sizeof(dp));
+    int ans = submain(arr, amt, 0);
+    cout << ans;
     return 0;
 }
