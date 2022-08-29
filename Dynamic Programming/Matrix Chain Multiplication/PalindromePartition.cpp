@@ -27,9 +27,20 @@ int submain(string &s, int i, int j)
     int ans = 999999;
     for (int k = i; k < j; ++k)
     {
+        /*
+        This bhere is the actual working of Matrix chain multiplcation.
+        But in this question we can optimise this approach.
+
         int lf = submain(s, i, k);
         int rt = submain(s, k + 1, j);
         ans = min(ans, lf + rt + 1);
+
+        Below I have optimised this by only reccuring to the right
+        if we know the left part is a palindrome.
+        */
+
+        if (isPal(s, i, k))
+            ans = min(ans, submain(s, k + 1, j) + 1);
     }
     return dp[i][j] = ans;
 }
